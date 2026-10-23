@@ -52,7 +52,7 @@ Open the local URL displayed in the terminal, usually `http://localhost:5173`.
 
 ## How to Use
 
-1. Open the application in your browser.
+1. Open the project in your browser.
 2. View the profiles loaded from the API.
 3. Click `+` to increase a counter.
 4. Click `−` to decrease a counter.
@@ -72,8 +72,8 @@ profile-app/
 │   └── index.css
 ├── index.html
 ├── package.json
-├── package-lock.json
-└── README.md
+└── package-lock.json
+ 
 ```
 
 ## Available Scripts
@@ -81,7 +81,7 @@ profile-app/
 | Command | Description |
 |---|---|
 | `npm run dev` | Starts the development server |
-| `npm run build` | Builds the application for production |
+| `npm run build` | Builds the project for production |
 | `npm run preview` | Previews the production build |
 | `npm run lint` | Runs ESLint, if configured |
 
