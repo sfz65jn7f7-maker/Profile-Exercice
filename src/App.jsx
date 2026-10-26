@@ -2,8 +2,32 @@
 import { useState, useEffect } from "react";
 import { ProfilesProvider, useProfiles } from "./ProfilesContext";
 
+const profileImages = [
+  "/profile.jpg",
+  "/Pink%20Sunset.png",
+  "/Red%20Sunset.jpg",
+];
 
-function ProfileCard({ profile }) {
+function ProfileStories() {
+  return (
+    <div className="flex shrink-0 items-center gap-4 px-6 pt-6">
+      {profileImages.map((imageSrc, index) => (
+        <div
+          key={imageSrc}
+          className="h-[68px] w-[68px] rounded-full bg-[linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)] p-[3px]"
+        >
+          <img
+            src={imageSrc}
+            alt={`Story de profil ${index + 1}`}
+            className="block h-full w-full rounded-full border-[2px] border-white object-cover"
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ProfileCard({ profile, imageSrc }) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -33,7 +57,7 @@ function handleMinus() {
     <div className="flex flex-col items-center gap-[10px]">
       <div className="h-[86px] w-[86px] rounded-full bg-[linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)] p-[4px]">
         <img
-          src="/profile.jpg"
+          src={imageSrc}
           alt={profile.username}
           className="block h-full w-full rounded-full border-[3px] border-white object-cover"
         />
@@ -74,17 +98,21 @@ function ProfileList() {
   const { profiles, loading, error } = useProfiles();
 
   if (loading) {
-    return <p className="text-gray-600">Chargement des profils...</p>;
+    return <p className="m-auto text-gray-600">Chargement des profils...</p>;
   }
 
   if (error) {
-    return <p className="text-red-600">{error}</p>;
+    return <p className="m-auto text-red-600">{error}</p>;
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center gap-[25px] p-[30px]">
-      {profiles.map((profile) => (
-        <ProfileCard key={profile.id} profile={profile} />
+    <div className="flex flex-1 flex-col items-center justify-center gap-[25px] p-[30px]">
+      {profiles.map((profile, index) => (
+        <ProfileCard
+          key={profile.id}
+          profile={profile}
+          imageSrc={profileImages[index]}
+        />
       ))}
     </div>
   );
@@ -93,7 +121,14 @@ function ProfileList() {
 function App() {
   return (
     <ProfilesProvider>
-      <ProfileList />
+      <main className="flex min-h-screen items-center justify-center bg-black p-4">
+        <div className="flex min-h-[min(844px,calc(100vh-32px))] w-full max-w-[390px] flex-col rounded-[2rem] bg-[#f8f7f4] shadow-[0_16px_50px_rgba(0,0,0,0.12)]">
+          <ProfileStories />
+          <div className="mx-6 mt-5 border-t border-gray-300" />
+          <h1 className="px-6 pt-3 text-sm font-bold text-[#222]">Compteurs</h1>
+          <ProfileList />
+        </div>
+      </main>
     </ProfilesProvider>
   );
 }
